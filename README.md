@@ -69,3 +69,8 @@ Hier zie je dat de Paddle extends GameObject. Dit betekend dus dat Paddle de con
 # Klassendiagram
 
 [https://github.com/gladjanus43/prog-4/blob/master/diagram.png]
+
+# Review
+
+https://stud.hosted.hr.nl/0950640/2018/06/20/review-ricks-game/
+

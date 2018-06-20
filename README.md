@@ -68,4 +68,4 @@ Hier zie je dat de Paddle extends GameObject. Dit betekend dus dat Paddle de con
 
 # Klassendiagram
 
-
+[[https://github.com/gladjanus43/prog-4/blob/master/diagram.png]]

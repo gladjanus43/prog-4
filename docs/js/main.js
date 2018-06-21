@@ -39,42 +39,61 @@ var Ball = (function (_super) {
     };
     return Ball;
 }(GameObject));
-var Game = (function () {
+var StartScreen = (function () {
+    function StartScreen() {
+        this.pause = true;
+        this.startButton = document.createElement('startGame');
+        document.body.appendChild(this.startButton);
+        this.startButton.innerHTML = 'Start de game';
+        this.startButton.addEventListener('click', this.clickedButton.bind(this));
+    }
+    StartScreen.prototype.clickedButton = function () {
+        this.startButton.remove();
+        this.pause = false;
+    };
+    return StartScreen;
+}());
+var Game = (function (_super) {
+    __extends(Game, _super);
     function Game() {
+        var _this = _super.call(this) || this;
         console.log('constr');
-        this.ball = new Ball(300, 200);
-        this.paddles = [];
-        requestAnimationFrame(this.gameLoop.bind(this));
-        this.paddles.push(new Paddle(this.randomX(), window.innerHeight));
-        this.interval = 20;
-        window.addEventListener('click', this.buttonClickEvent.bind(this));
-        this.counter = 0;
-        this.hasHit = false;
-        this.score = 0;
-        this.prevScore = this.getScore();
-        this.scoreMenu = document.createElement('score');
-        this.setPreviousScoreItem();
+        _this.ball = new Ball(300, 200);
+        _this.paddles = [];
+        requestAnimationFrame(_this.gameLoop.bind(_this));
+        _this.paddles.push(new Paddle(_this.randomX(), window.innerHeight));
+        _this.interval = 20;
+        window.addEventListener('click', _this.buttonClickEvent.bind(_this));
+        _this.counter = 0;
+        _this.hasHit = false;
+        _this.score = 0;
+        _this.prevScore = _this.getScore();
+        _this.scoreMenu = document.createElement('score');
+        _this.setPreviousScoreItem();
+        return _this;
     }
     Game.prototype.randomNumber = function (begin, end) {
         var ran = Math.floor(Math.random() * end + begin);
         return ran;
     };
     Game.prototype.gameLoop = function () {
-        if (this.hasHit == false) {
-            this.ball.move();
-            for (var i = 0; i < this.paddles.length; i++) {
-                this.paddles[i].move();
+        if (this.pause === false) {
+            if (this.hasHit == false) {
+                this.ball.move();
+                for (var i = 0; i < this.paddles.length; i++) {
+                    this.paddles[i].move();
+                }
+                this.removePaddles();
+                this.checkAllCollisions();
+                if (this.counter >= this.interval) {
+                    this.createPaddles();
+                    this.counter = 0;
+                }
+                this.counter++;
+                this.interval -= 0.01;
             }
-            this.removePaddles();
-            this.checkAllCollisions();
-            if (this.counter >= this.interval) {
-                this.createPaddles();
-                this.counter = 0;
-            }
-            this.counter++;
-            this.interval -= 0.01;
+            this.scorePoints();
         }
-        this.scorePoints();
         requestAnimationFrame(this.gameLoop.bind(this));
     };
     Game.prototype.checkAllCollisions = function () {
@@ -141,9 +160,9 @@ var Game = (function () {
         window.location.reload();
     };
     return Game;
-}());
+}(StartScreen));
 window.onload = function () {
-    new Game;
+    new Game();
 };
 var Paddle = (function (_super) {
     __extends(Paddle, _super);

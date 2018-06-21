@@ -5,7 +5,5 @@ class GameObject{
     constructor(x : number, y : number){
         this.posX = x
         this.posY = y
-
-        
     }
 }

@@ -1,4 +1,5 @@
-class Game{
+/// <reference path="startScreen.ts"/>
+class Game extends StartScreen{
     ball : Ball
     paddles : Array <Paddle>
 
@@ -10,7 +11,9 @@ class Game{
 
     counter : number
     interval : number
+    
     constructor(){
+        super()
         console.log('constr');
         
         this.ball = new Ball(300,200)
@@ -43,23 +46,28 @@ class Game{
     }
 
     private gameLoop(){
-        if(this.hasHit == false){
-            this.ball.move()   
-            for(let i = 0; i<this.paddles.length;i++){
-                this.paddles[i].move()
+        if(this.pause === false){
+            if(this.hasHit == false){
+                this.ball.move()   
+                for(let i = 0; i<this.paddles.length;i++){
+                    this.paddles[i].move()
+                }
+                this.removePaddles()
+                this.checkAllCollisions()
+                if(this.counter >= this.interval){
+                    this.createPaddles()
+                    this.counter = 0
+                }
+                this.counter++
+                this.interval -= 0.01
             }
-            this.removePaddles()
-            this.checkAllCollisions()
-            if(this.counter >= this.interval){
-                this.createPaddles()
-                this.counter = 0
-            }
-            this.counter++
-            this.interval -= 0.01
+            this.scorePoints()
+            // console.log('no pause');
+            
         }
-        this.scorePoints()
-    
         requestAnimationFrame(this.gameLoop.bind(this))
+        // console.log(this.pause);
+        
     }
 
     private checkAllCollisions(){
@@ -136,27 +144,11 @@ class Game{
 
 
     restart(){
-        // console.log('restart');
-        // let allElements = document.body.childNodes
-        
-        // for(let i = allElements.length-1; i >= 0; i--){
-        //     if(allElements[i].nodeName == 'SPAN' || allElements[i].nodeName == 'PREVSCORE'){
-        //         //do nothing
-        //     }else{
-        //         allElements[i].remove()
-        //     }
-        // }   
-        // console.log(this.constructor);
-
         window.location.reload()
-        
-
-        // this.constructor()
-    }
-     
+    }   
 }
 
 
 window.onload = () =>{
-    new Game
+    new Game()
 } 

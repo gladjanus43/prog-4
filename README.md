@@ -70,7 +70,27 @@ Hier zie je dat de Paddle extends GameObject. Dit betekend dus dat Paddle de con
 
 [https://github.com/gladjanus43/prog-4/blob/master/diagram.png]
 
+# Extra uitdaging!
+
+De extra uitdaging die ik heb toegepast op mijn spel is om een highscore op te slaan. Dit heb ik gedaan door de highscore te vervangen met de nieuwe highscore zodra de vorige is verbroken. Deze highscore wordt opgeslagen in een cookie door middel van
+een getScore functie en een setScore functie.
+
+```
+private setScore(score : number){
+        localStorage.setItem('score', score.toString())
+    }
+```
+
+Zoals je ziet in de setscore roep ik de functie localStorage.setItem aan. Hiermee kan je dus een waarde opslaan in een cookie op de pc die je gebruikt.
+
+# Link naar het spel
+
+https://gladjanus43.github.io/prog-4/
+
 # Review
 
 https://stud.hosted.hr.nl/0950640/2018/06/20/review-ricks-game/
+
+
+
 
